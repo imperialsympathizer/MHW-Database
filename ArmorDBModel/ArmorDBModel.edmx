@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ArmorDBModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="Data Source=C:\Users\Ben\source\repos\BenLearningStuff\MHW_DB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Armors">
+          <Key>
+            <PropertyRef Name="ArmorID" />
+          </Key>
+          <Property Name="ArmorID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Rarity" Type="integer" Nullable="false" />
+          <Property Name="Slot1" Type="integer" Nullable="false" />
+          <Property Name="Slot2" Type="integer" Nullable="false" />
+          <Property Name="Slot3" Type="integer" Nullable="false" />
+          <Property Name="MinDef" Type="integer" Nullable="false" />
+          <Property Name="MaxDef" Type="integer" Nullable="false" />
+          <Property Name="FireRes" Type="integer" Nullable="false" />
+          <Property Name="WaterRes" Type="integer" Nullable="false" />
+          <Property Name="ThunderRes" Type="integer" Nullable="false" />
+          <Property Name="IceRes" Type="integer" Nullable="false" />
+          <Property Name="DragonRes" Type="integer" Nullable="false" />
+          <Property Name="Event" Type="integer" Nullable="false" />
+          <Property Name="SetID" Type="integer" />
+          <Property Name="Skill1ID" Type="integer" />
+          <Property Name="Skill1Count" Type="integer" />
+          <Property Name="Skill2ID" Type="integer" />
+          <Property Name="Skill2Count" Type="integer" />
+          <Property Name="Type" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SetBonuses">
+          <Key>
+            <PropertyRef Name="BonusID" />
+          </Key>
+          <Property Name="BonusID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SetID" Type="integer" Nullable="false" />
+          <Property Name="SkillID" Type="integer" Nullable="false" />
+          <Property Name="NumRequired" Type="decimal" Precision="53" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sets">
+          <Key>
+            <PropertyRef Name="SetID" />
+          </Key>
+          <Property Name="SetID" Type="integer" Nullable="false" />
+          <Property Name="SetName" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Skills">
+          <Key>
+            <PropertyRef Name="SkillID" />
+          </Key>
+          <Property Name="SkillID" Type="integer" Nullable="false" />
+          <Property Name="SkillName" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="SkillDescription" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="MaxPoints" Type="integer" Nullable="false" />
+          <Property Name="SlotLevel" Type="integer" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Armors_0_0">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="0..1" />
+          <End Role="Armors" Type="Self.Armors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="SkillID" />
+            </Principal>
+            <Dependent Role="Armors">
+              <PropertyRef Name="Skill2ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Armors_1_0">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="0..1" />
+          <End Role="Armors" Type="Self.Armors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="SkillID" />
+            </Principal>
+            <Dependent Role="Armors">
+              <PropertyRef Name="Skill1ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Armors_2_0">
+          <End Role="Sets" Type="Self.Sets" Multiplicity="0..1" />
+          <End Role="Armors" Type="Self.Armors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sets">
+              <PropertyRef Name="SetID" />
+            </Principal>
+            <Dependent Role="Armors">
+              <PropertyRef Name="SetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SetBonuses_0_0">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
+          <End Role="SetBonuses" Type="Self.SetBonuses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="SkillID" />
+            </Principal>
+            <Dependent Role="SetBonuses">
+              <PropertyRef Name="SkillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SetBonuses_1_0">
+          <End Role="Sets" Type="Self.Sets" Multiplicity="1" />
+          <End Role="SetBonuses" Type="Self.SetBonuses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sets">
+              <PropertyRef Name="SetID" />
+            </Principal>
+            <Dependent Role="SetBonuses">
+              <PropertyRef Name="SetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ArmorDBModelStoreContainer">
+          <EntitySet Name="Armors" EntityType="Self.Armors" store:Type="Tables" />
+          <EntitySet Name="SetBonuses" EntityType="Self.SetBonuses" store:Type="Tables" />
+          <EntitySet Name="Sets" EntityType="Self.Sets" store:Type="Tables" />
+          <EntitySet Name="Skills" EntityType="Self.Skills" store:Type="Tables" />
+          <AssociationSet Name="FK_Armors_0_0" Association="Self.FK_Armors_0_0">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="Armors" EntitySet="Armors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Armors_1_0" Association="Self.FK_Armors_1_0">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="Armors" EntitySet="Armors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Armors_2_0" Association="Self.FK_Armors_2_0">
+            <End Role="Sets" EntitySet="Sets" />
+            <End Role="Armors" EntitySet="Armors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SetBonuses_0_0" Association="Self.FK_SetBonuses_0_0">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="SetBonuses" EntitySet="SetBonuses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SetBonuses_1_0" Association="Self.FK_SetBonuses_1_0">
+            <End Role="Sets" EntitySet="Sets" />
+            <End Role="SetBonuses" EntitySet="SetBonuses" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ArmorDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Armor">
+          <Key>
+            <PropertyRef Name="ArmorID" />
+          </Key>
+          <Property Name="ArmorID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Rarity" Type="Int64" Nullable="false" />
+          <Property Name="Slot1" Type="Int64" Nullable="false" />
+          <Property Name="Slot2" Type="Int64" Nullable="false" />
+          <Property Name="Slot3" Type="Int64" Nullable="false" />
+          <Property Name="MinDef" Type="Int64" Nullable="false" />
+          <Property Name="MaxDef" Type="Int64" Nullable="false" />
+          <Property Name="FireRes" Type="Int64" Nullable="false" />
+          <Property Name="WaterRes" Type="Int64" Nullable="false" />
+          <Property Name="ThunderRes" Type="Int64" Nullable="false" />
+          <Property Name="IceRes" Type="Int64" Nullable="false" />
+          <Property Name="DragonRes" Type="Int64" Nullable="false" />
+          <Property Name="Event" Type="Int64" Nullable="false" />
+          <Property Name="SetID" Type="Int64" />
+          <Property Name="Skill1ID" Type="Int64" />
+          <Property Name="Skill1Count" Type="Int64" />
+          <Property Name="Skill2ID" Type="Int64" />
+          <Property Name="Skill2Count" Type="Int64" />
+          <Property Name="Type" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Skill" Relationship="Self.FK_Armors_0_0" FromRole="Armors" ToRole="Skills" />
+          <NavigationProperty Name="Skill1" Relationship="Self.FK_Armors_1_0" FromRole="Armors" ToRole="Skills" />
+          <NavigationProperty Name="Set" Relationship="Self.FK_Armors_2_0" FromRole="Armors" ToRole="Sets" />
+        </EntityType>
+        <EntityType Name="SetBonus">
+          <Key>
+            <PropertyRef Name="BonusID" />
+          </Key>
+          <Property Name="BonusID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SetID" Type="Int64" Nullable="false" />
+          <Property Name="SkillID" Type="Int64" Nullable="false" />
+          <Property Name="NumRequired" Type="Decimal" Precision="53" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Skill" Relationship="Self.FK_SetBonuses_0_0" FromRole="SetBonuses" ToRole="Skills" />
+          <NavigationProperty Name="Set" Relationship="Self.FK_SetBonuses_1_0" FromRole="SetBonuses" ToRole="Sets" />
+        </EntityType>
+        <EntityType Name="Set">
+          <Key>
+            <PropertyRef Name="SetID" />
+          </Key>
+          <Property Name="SetID" Type="Int64" Nullable="false" />
+          <Property Name="SetName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Armors" Relationship="Self.FK_Armors_2_0" FromRole="Sets" ToRole="Armors" />
+          <NavigationProperty Name="SetBonuses" Relationship="Self.FK_SetBonuses_1_0" FromRole="Sets" ToRole="SetBonuses" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="SkillID" />
+          </Key>
+          <Property Name="SkillID" Type="Int64" Nullable="false" />
+          <Property Name="SkillName" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SkillDescription" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="MaxPoints" Type="Int64" Nullable="false" />
+          <Property Name="SlotLevel" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Armors" Relationship="Self.FK_Armors_0_0" FromRole="Skills" ToRole="Armors" />
+          <NavigationProperty Name="Armors1" Relationship="Self.FK_Armors_1_0" FromRole="Skills" ToRole="Armors" />
+          <NavigationProperty Name="SetBonuses" Relationship="Self.FK_SetBonuses_0_0" FromRole="Skills" ToRole="SetBonuses" />
+        </EntityType>
+        <Association Name="FK_Armors_0_0">
+          <End Role="Skills" Type="Self.Skill" Multiplicity="0..1" />
+          <End Role="Armors" Type="Self.Armor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="SkillID" />
+            </Principal>
+            <Dependent Role="Armors">
+              <PropertyRef Name="Skill2ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Armors_1_0">
+          <End Role="Skills" Type="Self.Skill" Multiplicity="0..1" />
+          <End Role="Armors" Type="Self.Armor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="SkillID" />
+            </Principal>
+            <Dependent Role="Armors">
+              <PropertyRef Name="Skill1ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Armors_2_0">
+          <End Role="Sets" Type="Self.Set" Multiplicity="0..1" />
+          <End Role="Armors" Type="Self.Armor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sets">
+              <PropertyRef Name="SetID" />
+            </Principal>
+            <Dependent Role="Armors">
+              <PropertyRef Name="SetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SetBonuses_0_0">
+          <End Role="Skills" Type="Self.Skill" Multiplicity="1" />
+          <End Role="SetBonuses" Type="Self.SetBonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="SkillID" />
+            </Principal>
+            <Dependent Role="SetBonuses">
+              <PropertyRef Name="SkillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SetBonuses_1_0">
+          <End Role="Sets" Type="Self.Set" Multiplicity="1" />
+          <End Role="SetBonuses" Type="Self.SetBonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sets">
+              <PropertyRef Name="SetID" />
+            </Principal>
+            <Dependent Role="SetBonuses">
+              <PropertyRef Name="SetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ArmorDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Armors" EntityType="Self.Armor" />
+          <EntitySet Name="SetBonuses" EntityType="Self.SetBonus" />
+          <EntitySet Name="Sets" EntityType="Self.Set" />
+          <EntitySet Name="Skills" EntityType="Self.Skill" />
+          <AssociationSet Name="FK_Armors_0_0" Association="Self.FK_Armors_0_0">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="Armors" EntitySet="Armors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Armors_1_0" Association="Self.FK_Armors_1_0">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="Armors" EntitySet="Armors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Armors_2_0" Association="Self.FK_Armors_2_0">
+            <End Role="Sets" EntitySet="Sets" />
+            <End Role="Armors" EntitySet="Armors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SetBonuses_0_0" Association="Self.FK_SetBonuses_0_0">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="SetBonuses" EntitySet="SetBonuses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SetBonuses_1_0" Association="Self.FK_SetBonuses_1_0">
+            <End Role="Sets" EntitySet="Sets" />
+            <End Role="SetBonuses" EntitySet="SetBonuses" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ArmorDBModelStoreContainer" CdmEntityContainer="ArmorDBEntities">
+          <EntitySetMapping Name="Armors">
+            <EntityTypeMapping TypeName="ArmorDBModel.Armor">
+              <MappingFragment StoreEntitySet="Armors">
+                <ScalarProperty Name="ArmorID" ColumnName="ArmorID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rarity" ColumnName="Rarity" />
+                <ScalarProperty Name="Slot1" ColumnName="Slot1" />
+                <ScalarProperty Name="Slot2" ColumnName="Slot2" />
+                <ScalarProperty Name="Slot3" ColumnName="Slot3" />
+                <ScalarProperty Name="MinDef" ColumnName="MinDef" />
+                <ScalarProperty Name="MaxDef" ColumnName="MaxDef" />
+                <ScalarProperty Name="FireRes" ColumnName="FireRes" />
+                <ScalarProperty Name="WaterRes" ColumnName="WaterRes" />
+                <ScalarProperty Name="ThunderRes" ColumnName="ThunderRes" />
+                <ScalarProperty Name="IceRes" ColumnName="IceRes" />
+                <ScalarProperty Name="DragonRes" ColumnName="DragonRes" />
+                <ScalarProperty Name="Event" ColumnName="Event" />
+                <ScalarProperty Name="SetID" ColumnName="SetID" />
+                <ScalarProperty Name="Skill1ID" ColumnName="Skill1ID" />
+                <ScalarProperty Name="Skill1Count" ColumnName="Skill1Count" />
+                <ScalarProperty Name="Skill2ID" ColumnName="Skill2ID" />
+                <ScalarProperty Name="Skill2Count" ColumnName="Skill2Count" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SetBonuses">
+            <EntityTypeMapping TypeName="ArmorDBModel.SetBonus">
+              <MappingFragment StoreEntitySet="SetBonuses">
+                <ScalarProperty Name="BonusID" ColumnName="BonusID" />
+                <ScalarProperty Name="SetID" ColumnName="SetID" />
+                <ScalarProperty Name="SkillID" ColumnName="SkillID" />
+                <ScalarProperty Name="NumRequired" ColumnName="NumRequired" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sets">
+            <EntityTypeMapping TypeName="ArmorDBModel.Set">
+              <MappingFragment StoreEntitySet="Sets">
+                <ScalarProperty Name="SetID" ColumnName="SetID" />
+                <ScalarProperty Name="SetName" ColumnName="SetName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="ArmorDBModel.Skill">
+              <MappingFragment StoreEntitySet="Skills">
+                <ScalarProperty Name="SkillID" ColumnName="SkillID" />
+                <ScalarProperty Name="SkillName" ColumnName="SkillName" />
+                <ScalarProperty Name="SkillDescription" ColumnName="SkillDescription" />
+                <ScalarProperty Name="MaxPoints" ColumnName="MaxPoints" />
+                <ScalarProperty Name="SlotLevel" ColumnName="SlotLevel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

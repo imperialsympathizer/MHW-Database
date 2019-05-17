@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b66194685e484b06bec63ba3b48b96e3" Name="Diagram1">
+        <EntityTypeShape EntityType="ArmorDBModel.Armor" Width="1.5" PointX="3.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArmorDBModel.SetBonus" Width="1.5" PointX="3.125" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArmorDBModel.Set" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArmorDBModel.Skill" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="ArmorDBModel.FK_Armors_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="ArmorDBModel.FK_Armors_1_0" ManuallyRouted="false" />
+        <AssociationConnector Association="ArmorDBModel.FK_Armors_2_0" ManuallyRouted="false" />
+        <AssociationConnector Association="ArmorDBModel.FK_SetBonuses_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="ArmorDBModel.FK_SetBonuses_1_0" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
